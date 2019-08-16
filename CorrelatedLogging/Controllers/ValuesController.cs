@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,8 +22,14 @@ namespace CorrelatedLogging.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            this.logger.LogInformation("Hello {name}", "Xavier");
+            this.logger.LogInformation("Request Thread {threadid}", Thread.CurrentThread.ManagedThreadId);
+            Task.Run(() => LogFromThread(this.logger)).Wait();
             return new string[] { "value1", "value2" };
+        }
+
+        static void LogFromThread(ILogger<ValuesController> logger)
+        {
+            logger.LogInformation("Background thread {threadid}", Thread.CurrentThread.ManagedThreadId);
         }
 
         // GET api/values/5

@@ -61,10 +61,16 @@ namespace CorrelatedLogging
                 if (headers != "")
                 {
                     message += Environment.NewLine + headers + Environment.NewLine + _accessor.HttpContext.Request.Path;
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine(message);
                 }
 
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("No http context");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
     }

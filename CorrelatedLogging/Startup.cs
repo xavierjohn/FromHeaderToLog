@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using CWiz.LoggingMiddleware;
 
 namespace CorrelatedLogging
 {
@@ -35,8 +34,6 @@ namespace CorrelatedLogging
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             loggerFactory.AddCustomLogger(serviceProvider.GetService<IHttpContextAccessor>());
-            loggerFactory.AddCorralatedLogger();
-            app.UseCorralationLogger();
 
             if (env.IsDevelopment())
             {
